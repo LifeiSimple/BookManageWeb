@@ -16,4 +16,12 @@ public class StudentServiceImpl implements StudentService {
             return studentMapper.getStudentList();
         }
     }
+
+    @Override
+    public int countStudents() {
+        try (SqlSession session = MybatisUtil.getSession()) {
+            StudentMapper studentMapper = session.getMapper(StudentMapper.class);
+            return studentMapper.countStudents();
+        }
+    }
 }

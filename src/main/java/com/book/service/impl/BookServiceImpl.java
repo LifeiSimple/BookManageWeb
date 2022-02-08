@@ -87,4 +87,12 @@ public class BookServiceImpl implements BookService {
             mapper.addBook(title, desc, price);
         }
     }
+
+    @Override
+    public int countBooks() {
+        try (SqlSession sqlSession = MybatisUtil.getSession()) {
+            BookMapper mapper = sqlSession.getMapper(BookMapper.class);
+            return mapper.countBooks();
+        }
+    }
 }

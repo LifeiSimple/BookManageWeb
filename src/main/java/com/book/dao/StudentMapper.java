@@ -10,4 +10,7 @@ public interface StudentMapper {
     @Select("select * from student")
     List<Student> getStudentList();
 
+    @Select("select count(*) from student")
+    int countStudents();
+
 }

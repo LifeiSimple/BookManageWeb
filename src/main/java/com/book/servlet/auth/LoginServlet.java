@@ -5,9 +5,11 @@ import com.book.service.impl.UserServiceImpl;
 import com.book.util.ThymeleafUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.ibatis.annotations.Param;
 import org.thymeleaf.context.Context;
 
 import java.io.IOException;
@@ -25,6 +27,23 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=utf-8");
+
+        // 登录校验，记住我功能
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            String username = null;
+            String password = null;
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("username")) username = cookie.getValue();
+                if (cookie.getName().equals("password")) password = cookie.getValue();
+            }
+            if (username != null && password != null) {
+                if (service.auth(username,password,req.getSession())) {
+                    resp.sendRedirect("index");
+                    return;
+                }
+            }
+        }
 
         // 获取页面上下文，与前端页面传递数据
         Context context = new Context();
@@ -59,7 +78,21 @@ public class LoginServlet extends HttpServlet {
             // 如果用户名和密码能够在数据库中查询到，则重定向跳转进入首页
             // 登录成功
 //            resp.getWriter().write("Success!");
+
+            // 实现记住用户功能
+            if (remember != null) {
+                Cookie cookie_username = new Cookie("username", username);
+                // Cookie 保存7天
+                cookie_username.setMaxAge(60 * 60 * 24 * 7);
+                Cookie cookie_password = new Cookie("password", password);
+                cookie_password.setMaxAge(60 * 60 * 24 * 7);
+
+                resp.addCookie(cookie_username);
+                resp.addCookie(cookie_password);
+            }
+
             resp.sendRedirect("index");
+
 
         } else {
             // 登录失败，没有在数据库中查找到用户

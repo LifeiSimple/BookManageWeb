@@ -202,8 +202,8 @@
                                     </svg>
                             </div>
                             <div class="icon-info-text">
-                                <h5 class="ad-title">Happy Customers</h5>
-                                <h4 class="ad-card-title">66k</h4>
+                                <h5 class="title">学生数量</h5>
+                                <h4 class="ad-card-title" th:text="${student_count}">66k</h4>
                             </div>
                         </div>
                     </div>
@@ -220,8 +220,8 @@
                                 </svg>
                             </div>
                             <div class="icon-info-text">
-                                <h5 class="ad-title">Daily Orders</h5>
-                                <h4 class="ad-card-title">15k</h4>
+                                <h5 class="title">书籍数量</h5>
+                                <h4 class="ad-card-title" th:text="${book_count}">15k</h4>
                             </div>
                         </div>
                     </div>
@@ -242,8 +242,8 @@
                                 </svg>
                             </div>
                             <div class="icon-info-text">
-                                <h5 class="ad-title">Total Sales</h5>
-                                <h4 class="ad-card-title">420k</h4>
+                                <h5 class="title">借阅数量</h5>
+                                <h4 class="ad-card-title" th:text="${borrow_list.size()}"></h4>
                             </div>
                         </div>
                     </div>
@@ -267,8 +267,8 @@
                                 </svg>
                             </div>
                             <div class="icon-info-text">
-                                <h5 class="ad-title">Total Revenue</h5>
-                                <h4 class="ad-card-title">10k</h4>
+                                <h5 class="title">图书馆总营收</h5>
+                                <h4 class="ad-card-title">1,000￥</h4>
                             </div>
                         </div>
                     </div>
